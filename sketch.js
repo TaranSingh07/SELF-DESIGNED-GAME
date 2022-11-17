@@ -1,123 +1,63 @@
-const Engine = Matter.Engine;
-const World= Matter.World;
-const Bodies = Matter.Bodies;
+var background,backgroundImg,ground,groundImg,ground1,ground1Img,bullet,bullet1Img,bullet2Img;
+var zombie,zombieImg,cowboy,cowboyImg;
 
-var engine, world;
 
-var particle1, particle2,particle3,particle4,particle5;
-var particle6, particle7,particle8,particle9,particle10;
-var rotator1, rotator2, rotator3;
-var block1, block2;
 
-var angle1=60;
-var angle2=60;
-var angle3=60;
+function preload(){
+  backgroundImg = loadImage("background.jpg");
+  bullet1Img = loadImage("bullet1.png");
+  bullet2Img = loadImage("bullet2.png");
+  zombieImg = loadImage("zombie.png");
+  cowboyImg= loadImage("cowboy.png");
+  groundImg = loadImage("ground.jpg")
+  ground1Img = loadImage("ground1.jpg")
+  zombie1Img = loadAnimation("zombie1.jpg")
+}
 
 function setup(){
-    var canvas = createCanvas(550,600);
-    engine = Engine.create();
-    world = engine.world;
+  createCanvas(windowWidth,windowHeight);
+  
+  ground = createSprite(40,500,50,40)
+  ground.addImage(groundImg)
+  ground.scale = 0.07
+  
+   cowboy = createSprite(110, 305, 50, 40)
+   cowboy.addImage(cowboyImg)
+  cowboy.scale  = 0.2
+  
+  
+  
+    ground1 = createSprite(640, 400, 40, 20)
+    ground1.addImage(ground1Img)
+    ground1.scale = 0.08
+  
+  
+  
+    zombie = createSprite(640, 320, 40, 20)
+  zombie.addImage(zombieImg)
+    zombie.scale = 0.08
+  zombie.debug = false;
+ zombie.setCollider("rectangle",0,0,zombie.width,zombie.height);
 
-    //created plane and block bodies
-    var plane_options={
-      isStatic: true
-    }
-
-    plane = Bodies.rectangle(600,height,1200,20,plane_options);
-    World.add(world,plane);
-    block1=Bodies.rectangle(100,400,150,20,plane_options);
-    World.add(world,block1);
-    block2=Bodies.rectangle(400,400,150,20,plane_options);
-    World.add(world,block2);
-
-    //created multiple of particle bodies 
-    var particle_options = {
-      restitution:0.4,
-      friction:0.02
-    }
-
-    particle1 = Bodies.circle(220,10,10,particle_options);
-    World.add(world,particle1);
-    particle2 = Bodies.circle(220,10,10,particle_options);
-    World.add(world,particle2);
-    particle3 = Bodies.circle(225,10,10,particle_options);
-    World.add(world,particle3);
-    particle4 = Bodies.circle(230,10,10,particle_options);
-    World.add(world,particle4);
-    particle5 =Bodies.circle(230,10,10,particle_options);
-    World.add(world,particle5);
-
-    var rotator_options={
-      // isStatic=true
-      // isStatic true
-      // isStatic:false
-      // isStatic:true
-    };
-
-    // rotator1 = rectangle(250,200,150,20,rotator_options);
-    // World.add(world,rotator1);
-
-    // rotator1 = Bodies.rectangle();
-    // World.add(world,rotator1);
-
-    // rotator1 = Bodies.circle(250,200,150,20,rotator_options);
-    // World.add(world,rotator1);
-
-    // rotator1 = Bodies.rectangle(250,200,150,20,rotator_options);
-    // World.add(world,rotator1);
-
-    rotator2 = Bodies.rectangle(250,200,150,20,rotator_options);
-    World.add(world,rotator2);
-
-    rotator3 = Bodies.rectangle(250,200,150,20,rotator_options);
-    World.add(world,rotator3);
-
-    //styling the bodies here
-    fill("brown");
-    rectMode(CENTER);
-    ellipseMode(RADIUS);
-
+  
 }
 
 function draw(){
-    background("lightgreen");
-    Engine.update(engine);
+  background(backgroundImg);
+  
 
-  //created shape for plane and stand
-  rect(plane.position.x,plane.position.y,1200,20);
-  rect(block1.position.x,block1.position.y,150,20);
-  rect(block2.position.x,block2.position.y,150,20);
-
-  //created shape for all the paticles
-  ellipse(particle1.position.x,particle1.position.y,10);
-  ellipse(particle2.position.x,particle2.position.y,10);
-  ellipse(particle3.position.x,particle3.position.y,10);
-  ellipse(particle4.position.x,particle4.position.y,10);
-  ellipse(particle5.position.x,particle5.position.y,10);
-
-  //created shape for all the rotators
-  Matter.Body.rotate(rotator1,angle1)
-  push();
-  translate(rotator1.position.x,rotator1.position.y);
-  rotate(angle1);
-  rect(0,0,150,20);
-  pop();
-  angle1 +=0.2;
-
-  Matter.Body.rotate(rotator2,angle2)
-  push();
-  translate(rotator2.position.x,rotator2.position.y);
-  rotate(angle2);
-  rect(0,0,150,20);
-  pop();
-  angle2 +=0.3;
-
-  Matter.Body.rotate(rotator3,angle3)
-  push();
-  translate(rotator3.position.x,rotator3.position.y);
-  rotate(angle3);
-  rect(0,0,150,20);
-  pop();
-  angle3 +=0.4;
     
+  if(keyDown("space")){
+    bullet1 = createSprite(cowboy.x+100,cowboy.y+15,10,5);
+    bullet1.addImage(bullet1Img);
+    bullet1.scale = 0.08
+    bullet1.velocityX = 10;
+     bullet1.debug = false;
+  
+  
+       
+drawSprites();
+  }
+  
+  
 }
